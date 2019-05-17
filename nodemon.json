@@ -1,9 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "kento",
-        "MONGO_PASSWORD": "w9uiPs1S6rzKamKC",
-        "MONGO_DEFAULT_DATABASE": "phrases",
-
-        "EMAIL": "ideal.kt.reality@gmail.com"
-    }
-}
