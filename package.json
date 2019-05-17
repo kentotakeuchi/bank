@@ -1,0 +1,39 @@
+{
+  "name": "bank",
+  "version": "1.0.0",
+  "description": "language",
+  "main": "app.js",
+  "author": "kentotakeuchi <ideal.kt.reality@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "8.11.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "yarn install --prefix client",
+    "start": "NODE_ENV=production MONGO_USER=kento MONGO_PASSWORD=5RnPsLOhdnUeCzfU MONGO_DEFAULT_DATABASE=news node app.js",
+    "start-server": "node app.js",
+    "server": "nodemon app.js",
+    "client": "yarn start --prefix client",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "heroku-postbuild": "cd client && yarn && yarn build"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "concurrently": "^4.1.0",
+    "crypto": "^1.0.1",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.4",
+    "mongoose": "^5.5.9",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.1.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^1.19.0"
+  }
+}

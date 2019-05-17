@@ -1,0 +1,15 @@
+@import '../../sass/variables.scss';
+
+.AuthForm {
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid $color-primary;
+    border-radius: 3px;
+  }
+
+  @media (min-width: 768px) {
+    .AuthForm{
+      width: 40rem;
+    }
+  }

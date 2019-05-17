@@ -1,0 +1,139 @@
+@import '../../../sass/variables.scss';
+
+.button__admin {
+  font: inherit;
+  border: 1px solid $color-primary;
+  color: $color-secondary;
+  background: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.button__admin:focus {
+  outline: none;
+}
+
+.button__admin:disabled {
+  background: $color-grey-light-3;
+  color: $color-grey-dark-2;
+  cursor: not-allowed;
+  border: $color-grey-light-3;
+  box-shadow: none;
+}
+
+.button__admin:disabled:hover,
+.button__admin:disabled:active {
+  background: $color-grey-light-3;
+  color: $color-grey-dark-2;
+  border: $color-grey-light-3;
+}
+
+.button__admin:hover,
+.button__admin:active {
+  background: $color-primary;
+  color: $color-white;
+}
+
+.button__admin--flat {
+  border: none;
+}
+
+.button__admin--flat:hover,
+.button__admin--flat:active {
+//   background: $color-primary-transparent;
+  color: $color-primary;
+}
+
+.button__admin--raised {
+  background: $color-primary;
+  color: $color-secondary;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
+}
+
+.button__admin--raised:hover,
+.button__admin--raised:active {
+//   background: $color-primary-light;
+}
+
+.button__admin.button__admin--accent {
+  border-color: $color-primary;
+  color: $color-white;
+}
+
+.button__admin--accent:hover,
+.button__admin--accent:active {
+  background: $color-primary;
+  color: $color-primary;
+}
+
+.button__admin--flat.button__admin--accent:hover,
+.button__admin--flat.button__admin--accent:active {
+//   background: $color-primary-transparent;
+  color: $color-primary;
+}
+
+.button__admin.button__admin--accent.button__admin--raised {
+  background: $color-primary;
+  color: $color-white;
+}
+
+.button__admin--raised.button__admin--accent:hover,
+.button__admin--raised.button__admin--accent:active {
+//   background: $color-primary-light;
+}
+
+.button__admin.button__admin--danger {
+  border-color: $color-secondary;
+  color: $color-secondary;
+}
+
+.button__admin--danger:hover,
+.button__admin--danger:active {
+  background: $color-secondary;
+  color: $color-white;
+}
+
+.button__admin--flat.button__admin--danger:hover,
+.button__admin--flat.button__admin--danger:active {
+//   background: $color-secondary-transparent;
+  color: $color-secondary;
+}
+
+.button__admin.button__admin--danger.button__admin--raised {
+  background: $color-secondary;
+  color: $color-white;
+}
+
+.button__admin--raised.button__admin--danger:hover,
+.button__admin--raised.button__admin--danger:active {
+  background: $color-secondary;
+}
+
+.button__admin.button__admin--success {
+//   border-color: $color-tertiary;
+//   color: $color-tertiary;
+}
+
+.button__admin--success:hover,
+.button__admin--success:active {
+//   background: $color-tertiary;
+  color: $color-white;
+}
+
+.button__admin--flat.button__admin--success:hover,
+.button__admin--flat.button__admin--success:active {
+//   background: $color-tertiary-transparent;
+//   color: $color-tertiary;
+}
+
+.button__admin.button__admin--success.button__admin--raised {
+//   background: $color-tertiary;
+  color: $color-white;
+}
+
+.button__admin--raised.button__admin--success:hover,
+.button__admin--raised.button__admin--success:active {
+//   background: $color-tertiary;
+}

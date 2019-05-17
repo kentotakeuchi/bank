@@ -1,0 +1,36 @@
+@import '../../../sass/variables.scss';
+
+.input {
+  margin: 1rem 0;
+  width: 97%;
+}
+
+.input label {
+  display: block;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.input input,
+.input textarea {
+  display: block;
+  font: inherit;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid $color-secondary;
+  background-color: $color-primary;
+  color: $color-secondary;
+}
+
+.input .touched.invalid {
+    // border-color: $color-danger-real;
+    // background: $color-danger;
+}
+
+.input input:focus,
+.input textarea:focus {
+  outline: none;
+  border-color: $color-primary;
+  color: $color-secondary;
+}
