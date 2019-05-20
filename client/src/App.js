@@ -20,6 +20,8 @@ import LoginPage from './containers/Auth/Login';
 
 // main
 import Home from './containers/Home/Home';
+import Add from './containers/Add/Add';
+// import Asset from './containers/Asset/Asset';
 
 
 class App extends Component {
@@ -48,7 +50,7 @@ class App extends Component {
     this.props.onIsAuth();
     this.setState({ token: token, userId: userId });
     this.setAutoLogout(remainingMilliseconds);
-  }
+  };
 
   mobileNavHandler = isOpen => {
     this.setState({ showMobileNav: isOpen, showBackdrop: isOpen });
@@ -295,7 +297,27 @@ class App extends Component {
     if (this.props.isAuth) {
       routes = (
         <Switch>
-          <Route path="/" exact component={Home}/>
+          {/* <Route path="/asset" exact component={Asset}/> */}
+          <Route
+            path="/add"
+            exact
+            render={props => (
+              <Add
+                {...props}
+                token={this.state.token}
+              />
+            )}
+          />
+          <Route
+            path="/"
+            exact
+            render={props => (
+              <Home
+                {...props}
+                token={this.state.token}
+              />
+            )}
+          />
           <Redirect to="/" />
         </Switch>
       );
@@ -303,7 +325,7 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Layout>
+        <Layout onLogout={this.logoutHandler}>
           {routes}
         </Layout>
       </div>

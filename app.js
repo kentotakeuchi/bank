@@ -14,6 +14,7 @@ const morgan = require('morgan');
 
 // routes
 const authRoutes = require('./routes/auth');
+const assetRoutes = require('./routes/asset');
 ///////////////////////////////////////////////////////
 
 
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/auth', authRoutes);
+app.use('/api/asset', assetRoutes);
 
 
 const accessLogStream = fs.createWriteStream(

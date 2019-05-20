@@ -12,7 +12,10 @@ const header = ( props ) => {
 
         return (
             <header className={classes.Header}>
-                <NavigationItems style={classes.DesktopOnly}/>
+                <NavigationItems
+                style={classes.DesktopOnly}
+                isAuth={props.isAuth}
+                onLogout={props.onLogout}/>
 
                 <i className={styles.join(` `)}>
                     <DrawerToggle clicked={props.drawerToggleClicked} />
