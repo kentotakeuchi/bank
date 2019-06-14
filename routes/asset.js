@@ -8,11 +8,11 @@ const router = express.Router();
 
 
 // GET /asset/all
-// router.get('/all', isAuth, assetController.getAll);
+router.get('/all', isAuth, assetController.getAll);
 
 
 // GET /asset/random-one
-// router.get('/random-one', isAuth, assetController.getRandomOne);
+router.get('/random-one', isAuth, assetController.getRandomOne);
 
 
 // POST /asset/add

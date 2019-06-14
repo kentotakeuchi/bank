@@ -9,8 +9,9 @@ const User = require('../models/user');
 
 // GET /asset/all
 exports.getAll = async (req, res, next) => {
+  console.log(`getAll`);
   const currentPage = req.query.page || 1;
-  const perPage = 3;
+  const perPage = 50;
   try {
     const totalItems = await Asset.find().countDocuments();
     const assets = await Asset.find()
@@ -33,27 +34,33 @@ exports.getAll = async (req, res, next) => {
 };
 
 
-// TODO: later
 // GET /asset/random-one
-// exports.getRandomOne = async (req, res, next) => {
-//     const assetId = req.params.AssetId;
-//     const Asset = await Asset.findById(AssetId);
-//     try {
-//       if (!Asset) {
-//         const error = new Error('Could not find Asset.');
-//         error.statusCode = 404;
-//         throw error;
-//       }
-//       console.log(`Asset`, Asset);
-//       const creatorId = await User.findById(Asset.creator);
-//       res.status(200).json({ message: 'Asset fetched.', Asset: Asset, creatorId: creatorId });
-//     } catch (err) {
-//       if (!err.statusCode) {
-//         err.statusCode = 500;
-//       }
-//       next(err);
-//     }
-//   };
+exports.getRandomOne = async (req, res, next) => {
+    // required third party for findRandom
+    // const asset = await Asset.findRandom({}, {}, {limit: 1});
+
+    // Get the count of all assets
+    const totalItems = await Asset.find().countDocuments();
+    // Get a random entry
+    const random = Math.floor(Math.random() * totalItems);
+    const randomAsset = await Asset.findOne().skip(random);
+
+    try {
+      if (!randomAsset) {
+        const error = new Error('Could not find randomAsset.');
+        error.statusCode = 404;
+        throw error;
+      }
+      console.log(`randomAsset`, randomAsset);
+      const creatorId = await User.findById(randomAsset.creator);
+      res.status(200).json({ message: 'randomAsset fetched.', randomAsset: randomAsset, creatorId: creatorId });
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    }
+  };
 
 
 // POST /asset/add
@@ -105,7 +112,6 @@ exports.updateAsset = async (req, res, next) => {
   }
   const japanese = req.body.japanese;
   const english = req.body.english;
-  let imageUrl = req.body.image;
   try {
     const asset = await Asset.findById(assetId).populate('creator');
     if (!asset) {
@@ -120,9 +126,9 @@ exports.updateAsset = async (req, res, next) => {
     }
     asset.japanese = japanese;
     asset.english = english;
-    const result = await Asset.save();
+    const result = await asset.save();
     // io.getIO().emit('assets', { action: 'update', asset: result });
-    // res.status(200).json({ message: 'asset updated!', asset: result });
+    res.status(200).json({ message: 'asset updated!', asset: result });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

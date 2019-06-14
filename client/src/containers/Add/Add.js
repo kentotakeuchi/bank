@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import classes from './Add.module.scss';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { required, length } from '../util/validators';
@@ -65,7 +66,7 @@ class Add extends Component {
     });
   };
 
-  addFormHandler = (event, authData) => {
+  addFormHandler = (event, input) => {
     event.preventDefault();
     this.setState({ addLoading: true });
     fetch(`${process.env.REACT_APP_URL}/api/asset/add`, {
@@ -75,8 +76,8 @@ class Add extends Component {
         Authorization: 'Bearer ' + this.props.token
       },
       body: JSON.stringify({
-        japanese: authData.japanese,
-        english: authData.english
+        japanese: input.japanese,
+        english: input.english
       })
     })
       .then(res => {
@@ -128,13 +129,15 @@ class Add extends Component {
               english: this.state.addForm.english.value
             })
           }
+          className={classes.Form}
           style={{marginBottom: `1rem`}}
         >
           <Input
             id="japanese"
             label="JAPANESE"
             type="japanese"
-            control="input"
+            control="textarea"
+            rows="10"
             onChange={this.inputChangeHandler}
             onBlur={this.inputBlurHandler.bind(this, 'japanese')}
             value={this.state.addForm['japanese'].value}
@@ -145,7 +148,8 @@ class Add extends Component {
             id="english"
             label="ENGLISH"
             type="english"
-            control="input"
+            control="textarea"
+            rows="10"
             onChange={this.inputChangeHandler}
             onBlur={this.inputBlurHandler.bind(this, 'english')}
             value={this.state.addForm['english'].value}

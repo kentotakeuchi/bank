@@ -9,7 +9,8 @@ import thunk from 'redux-thunk';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import reducer from './store/reducers/reducers';
+import authReducer from './store/reducers/authReducer';
+import assetReducer from './store/reducers/assetReducer';
 // import * as actionTypes from './store/actions/actionTypes';
 
 console.log(`process.env.REACT_APP_URL`, process.env.REACT_APP_URL);
@@ -21,7 +22,8 @@ console.log(`process.env.REACT_APP_URL`, process.env.REACT_APP_URL);
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
-    reducer: reducer
+    auth: authReducer,
+    asset: assetReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(

@@ -21,7 +21,7 @@ import LoginPage from './containers/Auth/Login';
 // main
 import Home from './containers/Home/Home';
 import Add from './containers/Add/Add';
-// import Asset from './containers/Asset/Asset';
+import Asset from './containers/Asset/Asset';
 
 
 class App extends Component {
@@ -299,6 +299,16 @@ class App extends Component {
         <Switch>
           {/* <Route path="/asset" exact component={Asset}/> */}
           <Route
+            path="/asset"
+            exact
+            render={props => (
+              <Asset
+                {...props}
+                token={this.state.token}
+              />
+            )}
+          />
+          <Route
             path="/add"
             exact
             render={props => (
@@ -335,7 +345,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-      isAuth: state.reducer.isAuth
+      isAuth: state.auth.isAuth
   };
 }
 
