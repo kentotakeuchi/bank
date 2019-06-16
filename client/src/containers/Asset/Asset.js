@@ -10,24 +10,32 @@ import { required, length } from '../util/validators';
 
 
 class Asset extends Component {
+    constructor() {
+      super();
+      this.handleClick = this.handleClick.bind(this);
+    };
+
     state = {
       assetForm: {
         japanese: {
-          value: '',
+          value: [],
           valid: false,
           touched: false,
           validators: [required, length({ min: 1 })]
         },
         english: {
-          value: '',
+          value: [],
           valid: false,
           touched: false,
           validators: [required, length({ min: 1 })]
         },
         formIsValid: false,
         assetLoading: false,
-        error: null
-      }
+        error: null,
+        assetId: []
+      },
+      currentPage: 1,
+      assetsPerPage: 10
     };
 
     componentDidMount() {
@@ -48,8 +56,25 @@ class Asset extends Component {
         .then(res => {
             console.log(`res`, res);
             this.props.onGetAll(res.assets);
-            this.setState({
-                assetLoading: false
+            res.assets.map(asset => {
+              this.setState(prevState => {
+                const updatedForm = {
+                    ...prevState.assetForm,
+                    [`japanese`]: {
+                      ...prevState.assetForm[`japanese`],
+                      value: prevState.assetForm[`japanese`].value.push(asset.japanese)
+                    },
+                    [`english`]: {
+                      ...prevState.assetForm[`english`],
+                      value: prevState.assetForm[`english`].value.push(asset.english)
+                    },
+                    assetId: prevState.assetForm.assetId.push(asset._id)
+                };
+                return {
+                    assetForm: updatedForm,
+                    assetLoading: false
+                };
+              });
             });
         })
         .catch(error => {
@@ -100,12 +125,12 @@ class Asset extends Component {
       });
     };
 
-    assetFormHandler = (e, input, assetId) => {
+    assetFormHandler = (e, input) => {
       console.log(`e.target`, e.target);
 
       e.preventDefault();
       this.setState({ assetLoading: true });
-      fetch(`${process.env.REACT_APP_URL}/api/asset/${assetId}`, {
+      fetch(`${process.env.REACT_APP_URL}/api/asset/${input.assetId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -125,6 +150,9 @@ class Asset extends Component {
         .then(resData => {
           console.log(`resData`, resData);
           this.clearFormHandler();
+          this.setState({
+            assetLoading: false
+          });
         })
         .catch(err => {
           console.log(err);
@@ -155,12 +183,33 @@ class Asset extends Component {
       });
     };
 
+    // pagination
+    handleClick(e) {
+      this.setState({
+        currentPage: Number(e.target.id)
+      });
+    };
+
     render() {
       console.log(`this.props`, this.props);
 
-      const assetsEl = this.props.allAssets.map(asset => {
+      // pagination
+      const currentPage = this.state.currentPage;
+      const assetsPerPage = this.state.assetsPerPage;
+      // Logic for displaying assets
+      const indexOfLastAssets = currentPage * assetsPerPage;
+      const indexOfFirstAssets = indexOfLastAssets - assetsPerPage;
+      const currentAssets = this.props.allAssets.slice(indexOfFirstAssets, indexOfLastAssets);
+
+      const assetsEl = currentAssets.map(asset => {
           return (
-              <form key={asset._id}>
+              <form
+              key={asset._id}
+              onSubmit={e => this.assetFormHandler(e, {
+                japanese: this.state.assetForm.japanese.value,
+                english: this.state.assetForm.english.value,
+                assetId: this.state.assetForm.assetId
+              })}>
                 <Input
                     id={asset._id}
                     label="JAPANESE"
@@ -187,18 +236,27 @@ class Asset extends Component {
                 <Button
                     design="raised"
                     type="button"
-                    loading={this.state.assetLoading}
-                    onClick={e => this.assetFormHandler(e, {
-                        japanese: this.state.assetForm.japanese.value,
-                        english: this.state.assetForm.english.value
-                    },
-                    asset._id)
-                }>
+                    loading={this.state.assetLoading}>
                     edit
                 </Button>
               </form>
           )
-      })
+      });
+
+      // Logic for displaying page numbers
+      const pageNumbers = [];
+      for (let i = 1; i <= Math.ceil(this.props.allAssets.length / assetsPerPage); i++) {
+        pageNumbers.push(i);
+      }
+      const pageNumbersEl = pageNumbers.map(number => {
+          return (
+            <li
+              key={number}
+              id={number}
+              onClick={this.handleClick}
+              className={this.state.currentPage === number ? classes.Active : ``}>{number}</li>
+          );
+      });
 
       return (
           <div
@@ -206,6 +264,7 @@ class Asset extends Component {
             style={{marginBottom: `1rem`}}
           >
             { assetsEl }
+            <ul>{ pageNumbersEl }</ul>
           </div>
       );
     }
