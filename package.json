@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "language",
   "main": "app.js",
-  "author": "kentotakeuchi <ideal.kt.reality@gmail.com>",
+  "author": "kentotakeuchi",
   "license": "MIT",
   "engines": {
     "node": "8.11.3"
