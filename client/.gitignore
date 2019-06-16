@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # custom
-.env.development
-.env.production
+# .env.development
+# .env.production
