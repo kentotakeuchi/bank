@@ -1,0 +1,11 @@
+{
+    "env": {
+        "MONGO_USER": "kento",
+        "MONGO_PASSWORD": "w9uiPs1S6rzKamKC",
+        "MONGO_DEFAULT_DATABASE": "phrases",
+
+        "EMAIL": "ideal.kt.reality@gmail.com",
+
+        "SENDGRID_API_KEY": "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"
+    }
+}
