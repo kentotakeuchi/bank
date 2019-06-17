@@ -202,7 +202,6 @@ class Home extends Component {
                 <Input
                     id="japanese"
                     label="JAPANESE"
-                    type="japanese"
                     control="textarea"
                     rows="10"
                     onChange={this.inputChangeHandler}
@@ -215,7 +214,6 @@ class Home extends Component {
                 {this.state.showEnglish ? <Input
                     id="english"
                     label="ENGLISH"
-                    type="english"
                     control="textarea"
                     rows="10"
                     onChange={this.inputChangeHandler}
@@ -224,32 +222,34 @@ class Home extends Component {
                     valid={this.state.editForm['english'].valid}
                     touched={this.state.editForm['english'].touched}
                 /> : null}
-                <Button
-                    design="raised"
-                    type="submit"
-                    loading={this.state.addLoading}
-                    onClick={this.getRandomAssetHandler}>
-                        GET
-                </Button>
-                {this.state.showCheckButton ? <Button
-                    design="raised"
-                    // type="submit"
-                    // loading={this.state.addLoading}
-                    onClick={() => this.setState({
-                            showEnglish: true,
-                            showCheckButton: false,
-                            showEditButton: true,
-                            isDisabled: false
-                        })
-                    }>
-                        CHECK
-                </Button> : null}
-                {this.state.showEditButton ? <Button
-                    design="raised"
-                    type="submit"
-                    loading={this.state.addLoading}>
-                        EDIT
-                </Button> : null}
+                <div className={classes.ButtonContainer}>
+                    <Button
+                        design="raised"
+                        type="submit"
+                        loading={this.state.addLoading}
+                        onClick={this.getRandomAssetHandler}>
+                            GET
+                    </Button>
+                    {this.state.showCheckButton ? <Button
+                        design="raised"
+                        // type="submit"
+                        // loading={this.state.addLoading}
+                        onClick={() => this.setState({
+                                showEnglish: true,
+                                showCheckButton: false,
+                                showEditButton: true,
+                                isDisabled: false
+                            })
+                        }>
+                            CHECK
+                    </Button> : null}
+                    {this.state.showEditButton ? <Button
+                        design="raised"
+                        type="submit"
+                        loading={this.state.addLoading}>
+                            EDIT
+                    </Button> : null}
+                </div>
             </form>
         );
     }

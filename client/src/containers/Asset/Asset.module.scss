@@ -1,0 +1,53 @@
+@import '../../sass/variables.scss';
+
+.AssetContainer {
+    display: grid;
+    justify-items: center;
+    grid-row-gap: 2rem;
+
+    margin: 3rem;
+
+    & .Language {
+        display: grid;
+        justify-items: start;
+        width: 80%;
+        padding: 2rem;
+
+        border: 1px solid $color-primary;
+        border-radius: 3px;
+
+        & li {
+        }
+    }
+
+    // page numbers area
+    & .PageNumbers {
+        display: flex;
+        justify-content: center;
+
+        & li {
+            font-weight: 600;
+            padding: 1rem;
+            border: 1px solid $color-primary;
+            border-radius: 3px;
+
+            &:hover {
+                color: $color-secondary;
+                border: 1px solid $color-primary-light;
+                background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
+                cursor: pointer;
+            }
+
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+
+        & .Active {
+            color: $color-secondary;
+            border: 1px solid $color-primary-light;
+            background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
+            cursor: pointer;
+        }
+    }
+}

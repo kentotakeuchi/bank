@@ -19,7 +19,7 @@ const input = props => {
           required={props.required}
           value={props.value}
           placeholder={props.placeholder}
-          onChange={e => props.onChange(props.type, e.target.value)}
+          onChange={e => props.onChange(props.id, e.target.value)}
           onBlur={props.onBlur}
         />
       )}

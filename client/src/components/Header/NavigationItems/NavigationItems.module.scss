@@ -1,0 +1,14 @@
+.NavigationItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 10rem);
+    grid-column-gap: 2rem;
+    justify-content: center;
+
+    margin: 5rem;
+
+    font-size: 2.5rem;
+
+    & .Logout {
+        text-decoration: none;
+    }
+}

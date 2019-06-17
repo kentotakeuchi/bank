@@ -24,13 +24,13 @@ class Signup extends Component {
         value: '',
         valid: false,
         touched: false,
-        validators: [required]
+        validators: [required, length({ min: 5})]
       },
       formIsValid: false
     }
   };
 
-  inputChangeHandler = (input, value) => {
+  inputChangeHandler = (input, value) => { // input = props.type
     this.setState(prevState => {
       let isValid = true;
       for (const validator of prevState.signupForm[input].validators) {

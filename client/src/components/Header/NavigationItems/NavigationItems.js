@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-// import classes from './NavigationItems.module.scss';
+import classes from './NavigationItems.module.scss';
 import NavigationItem from '../../util/NavigationItem';
 
 
@@ -26,14 +26,15 @@ const navigationItems = ( props ) => {
                 <li key="logout">
                     <Link
                         onClick={props.onLogout}
-                        to="/">logout</Link>
+                        to="/"
+                        className={classes.Logout}>logout</Link>
                 </li>
             </Fragment>
         );
     }
 
     return (
-        <ul>
+        <ul className={classes.NavigationItems}>
             { navItems }
         </ul>
     )
