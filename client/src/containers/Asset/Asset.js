@@ -41,7 +41,10 @@ class Asset extends Component {
     componentDidMount() {
         // this.setState({ assetLoading: true });
         fetch(`${process.env.REACT_APP_URL}/api/asset/all`, {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({
+              userId: localStorage.getItem(`userId`)
+            }),
             headers: {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + this.props.token

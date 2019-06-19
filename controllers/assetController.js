@@ -7,23 +7,30 @@ const Asset = require('../models/asset');
 const User = require('../models/user');
 
 
-// GET /asset/all
+// TODO: find out how to fecth data related to the user with mongoose(without filter function)
+// POST /asset/all
 exports.getAll = async (req, res, next) => {
-  console.log(`getAll`);
+  console.log(`getAll req.body`, req.body);
+
+  const userId = req.body.userId;
   const currentPage = req.query.page || 1;
   const perPage = 50;
   try {
-    const totalItems = await Asset.find().countDocuments();
+    // const totalItems = await Asset.find().countDocuments();
+    // get "all" data
     const assets = await Asset.find()
       .populate('creator')
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
 
+    // filter the data related to the user
+    const userAssets = assets.filter(asset => JSON.stringify(asset.creator._id) === JSON.stringify(userId));
+
     res.status(200).json({
       message: 'Fetched assets successfully.',
-      assets: assets,
-      totalItems: totalItems
+      assets: userAssets,
+      totalItems: userAssets.length
     });
   } catch (err) {
     if (!err.statusCode) {

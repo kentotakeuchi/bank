@@ -7,8 +7,8 @@ const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 
-// GET /asset/all
-router.get('/all', isAuth, assetController.getAll);
+// POST /asset/all
+router.post('/all', isAuth, assetController.getAll);
 
 
 // GET /asset/random-one
