@@ -7,30 +7,31 @@ const Asset = require('../models/asset');
 const User = require('../models/user');
 
 
-// TODO: find out how to fecth data related to the user with mongoose(without filter function)
 // POST /asset/all
 exports.getAll = async (req, res, next) => {
-  console.log(`getAll req.body`, req.body);
+  console.log(`[getAll] req.body`, req.body);
 
   const userId = req.body.userId;
   const currentPage = req.query.page || 1;
   const perPage = 50;
   try {
-    // const totalItems = await Asset.find().countDocuments();
-    // get "all" data
-    const assets = await Asset.find()
+    // get the number of data related to this user
+    const userTotalItems = await Asset.find({ creator: {$in: userId} }).countDocuments();
+    // get "all" data related to this user
+    const userAssets = await Asset.find({ creator: {$in: userId} })
       .populate('creator')
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
 
+    // BAD SOLUTION ///////////////////////////////////////////
     // filter the data related to the user
-    const userAssets = assets.filter(asset => JSON.stringify(asset.creator._id) === JSON.stringify(userId));
+    // const userAssets = assets.filter(asset => JSON.stringify(asset.creator._id) === JSON.stringify(userId));
 
     res.status(200).json({
       message: 'Fetched assets successfully.',
       assets: userAssets,
-      totalItems: userAssets.length
+      totalItems: userTotalItems
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -164,10 +165,23 @@ exports.deleteAsset = async (req, res, next) => {
     await Asset.findByIdAndRemove(assetId);
 
     const user = await User.findById(req.userId);
-    user.assets.pull(assetId);
+
+    const userAssetIds = user.assets.pull(assetId);
+
+    // BAD SOLUTION ///////////////////////////////////////////
+    // let userAssets = [];
+    // userAssetIds.map(async id => {
+    //   let uAsset = await Asset.findById(id);
+    //   userAssets.push(uAsset);
+    // });
+
+    const userAssets = await Asset.find({ _id: {$in: userAssetIds} }).sort({ createdAt: -1 });
+
     await user.save();
     // io.getIO().emit('assets', { action: 'delete', asset: assetId });
-    // res.status(200).json({ message: 'Deleted asset.' });
+    res.status(200).json({
+      message: 'Deleted asset.',
+      assets:  userAssets});
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

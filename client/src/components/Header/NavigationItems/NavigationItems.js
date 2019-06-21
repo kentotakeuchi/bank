@@ -14,6 +14,7 @@ const navigationItems = ( props ) => {
         navItems = (
             <Fragment>
                 <NavigationItem link="/" exact>login</NavigationItem>
+                <NavigationItem link="/about" exact>about</NavigationItem>
                 <NavigationItem link="/signup" exact>signup</NavigationItem>
             </Fragment>
         );

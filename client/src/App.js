@@ -13,6 +13,7 @@ import * as actions from './store/actions/index';
 import Layout from './hoc/Layout/Layout';
 
 // auth
+import AboutPage from './containers/About/About';
 import ResetPage from './containers/Auth/Reset';
 import NewPasswordPage from './containers/Auth/NewPassword';
 import SignupPage from './containers/Auth/Signup';
@@ -244,6 +245,11 @@ class App extends Component {
     if (!this.props.isAuth) {
       routes = (
         <Switch>
+          <Route
+            path="/about"
+            exact
+            component={AboutPage}
+          />
           <Route
             path="/reset"
             exact
