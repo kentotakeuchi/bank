@@ -42,16 +42,22 @@ exports.getAll = async (req, res, next) => {
 };
 
 
-// GET /asset/random-one
+// POST /asset/random-one
 exports.getRandomOne = async (req, res, next) => {
     // required third party for findRandom
     // const asset = await Asset.findRandom({}, {}, {limit: 1});
 
-    // Get the count of all assets
-    const totalItems = await Asset.find().countDocuments();
+    const userId = req.body.userId;
+
+    const userAssets = await Asset.find({ creator: {$in: userId} })
+      .populate('creator')
+      .sort({ createdAt: -1 });
+
+    // Get the count of all data related to this user
+    const totalItems = await Asset.find({ creator: {$in: userId} }).countDocuments();
     // Get a random entry
     const random = Math.floor(Math.random() * totalItems);
-    const randomAsset = await Asset.findOne().skip(random);
+    const randomAsset = userAssets[random];
 
     try {
       if (!randomAsset) {
@@ -59,9 +65,12 @@ exports.getRandomOne = async (req, res, next) => {
         error.statusCode = 404;
         throw error;
       }
-      console.log(`randomAsset`, randomAsset);
       const creatorId = await User.findById(randomAsset.creator);
-      res.status(200).json({ message: 'randomAsset fetched.', randomAsset: randomAsset, creatorId: creatorId });
+      res.status(200).json({
+        message: 'randomAsset fetched.',
+        randomAsset: randomAsset,
+        creatorId: creatorId
+      });
     } catch (err) {
       if (!err.statusCode) {
         err.statusCode = 500;

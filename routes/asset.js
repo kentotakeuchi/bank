@@ -11,8 +11,8 @@ const router = express.Router();
 router.post('/all', isAuth, assetController.getAll);
 
 
-// GET /asset/random-one
-router.get('/random-one', isAuth, assetController.getRandomOne);
+// POST /asset/random-one
+router.post('/random-one', isAuth, assetController.getRandomOne);
 
 
 // POST /asset/add

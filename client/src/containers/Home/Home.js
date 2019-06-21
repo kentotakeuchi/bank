@@ -137,9 +137,12 @@ class Home extends Component {
         event.preventDefault();
         this.setState({ addLoading: true });
         fetch(`${process.env.REACT_APP_URL}/api/asset/random-one`, {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({
+              userId: localStorage.getItem(`userId`)
+            }),
             headers: {
-                // 'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + this.props.token
             }
         })
