@@ -1,6 +1,12 @@
+@import '../../sass/mixin.scss';
+
 .Form {
     width: 70%;
     margin: auto;
+
+    @include respond(phone) {
+        width: 90%;
+    }
 
     & .ButtonContainer {
         display: grid;

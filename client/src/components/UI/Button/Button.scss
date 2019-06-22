@@ -11,7 +11,6 @@
   text-decoration: none;
 
   border-radius: 3px;
-  width: 10rem;
 }
 
 .button__admin:focus {
@@ -50,14 +49,18 @@
 }
 
 .button__admin--raised {
-  background: $color-primary;
   color: $color-secondary;
+  border: 1px solid $color-primary-light;
+  background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
 }
 
 .button__admin--raised:hover,
 .button__admin--raised:active {
-//   background: $color-primary-light;
+  color: $color-white;
+  border: 1px solid $color-primary-light;
+  background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
+  cursor: pointer;
 }
 
 .button__admin.button__admin--accent {

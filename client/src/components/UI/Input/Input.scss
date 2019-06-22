@@ -1,8 +1,9 @@
 @import '../../../sass/variables.scss';
+@import '../../../sass/mixin.scss';
 
 .input {
-  margin: 1rem 0;
-  width: 97%;
+  margin: 0 0 2rem 0;
+  width: 100%;
 }
 
 .input label {
@@ -23,11 +24,15 @@
   border: 1px solid $color-secondary;
   background-color: $color-primary;
   color: $color-secondary;
+
+  @include respond(phone) {
+    width: 96%;
+  }
 }
 
 .input .touched.invalid {
-    // border-color: $color-danger-real;
-    // background: $color-danger;
+    border-color: $color-danger-real;
+    background: $color-danger;
 }
 
 .input input:focus,

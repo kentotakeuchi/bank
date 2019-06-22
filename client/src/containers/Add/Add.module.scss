@@ -1,4 +1,8 @@
 .Form {
-    width: 70%;
+    width: 90%;
     margin: auto;
+
+    & > button {
+        width: 10rem;
+    }
 }

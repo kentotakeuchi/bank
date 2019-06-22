@@ -200,7 +200,6 @@ class Home extends Component {
                     })
                 }
                 className={classes.Form}
-                style={{marginBottom: `1rem`}}
                 >
                 <Input
                     id="japanese"

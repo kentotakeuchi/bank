@@ -130,7 +130,7 @@ class Add extends Component {
             })
           }
           className={classes.Form}
-          style={{marginBottom: `1rem`}}
+          style={{marginBottom: `3rem`}}
         >
           <Input
             id="japanese"

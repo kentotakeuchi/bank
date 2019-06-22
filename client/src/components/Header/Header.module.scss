@@ -1,3 +1,9 @@
+@import '../../sass/mixin.scss';
+
 .Header {
     margin-bottom: 10rem;
+
+    @include respond(phone) {
+        margin-bottom: 0rem;
+    }
 }
