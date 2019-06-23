@@ -44,6 +44,6 @@
 
 // custom
 textarea:disabled {
-  background-color: $color-primary;
-  color: $color-secondary;
+  background-color: $color-primary !important;
+  color: $color-white;
 }
