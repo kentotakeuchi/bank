@@ -41,3 +41,9 @@
   border-color: $color-primary;
   color: $color-secondary;
 }
+
+// custom
+textarea:disabled {
+  background-color: $color-primary;
+  color: $color-secondary;
+}
