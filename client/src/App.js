@@ -62,12 +62,16 @@ class App extends Component {
   };
 
   logoutHandler = () => {
-    this.props.onIsNotAuth();
-    this.setState({ token: null });
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiryDate');
-    localStorage.removeItem('userId');
-    this.props.history.replace('/');
+    if (window.confirm('Are you sure you want to logout?')) {
+      this.props.onIsNotAuth();
+      this.setState({ token: null });
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiryDate');
+      localStorage.removeItem('userId');
+      this.props.history.replace('/');
+    } else {
+      console.log(`canceled logout`);
+    }
   };
 
   loginHandler = (event, authData) => {
