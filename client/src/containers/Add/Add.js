@@ -134,7 +134,7 @@ class Add extends Component {
         >
           <Input
             id="japanese"
-            label="JAPANESE"
+            label="if"
             control="textarea"
             rows="10"
             onChange={this.inputChangeHandler}
@@ -145,7 +145,7 @@ class Add extends Component {
           />
           <Input
             id="english"
-            label="ENGLISH"
+            label="then"
             control="textarea"
             rows="10"
             onChange={this.inputChangeHandler}

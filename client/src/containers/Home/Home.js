@@ -203,7 +203,7 @@ class Home extends Component {
                 >
                 <Input
                     id="japanese"
-                    label="JAPANESE"
+                    label="if"
                     control="textarea"
                     rows="10"
                     onChange={this.inputChangeHandler}
@@ -215,7 +215,7 @@ class Home extends Component {
                 />
                 {this.state.showEnglish ? <Input
                     id="english"
-                    label="ENGLISH"
+                    label="then"
                     control="textarea"
                     rows="10"
                     onChange={this.inputChangeHandler}

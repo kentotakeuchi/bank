@@ -8,7 +8,7 @@ class About extends Component {
         return(
             <div className={classes.About}>
                 <h1>bank</h1>
-                <p>BANK is an application like flash card to consolidate your vocabulary in English. you can store phrases you wanted to say and review them at random whenever you have time.</p>
+                <p>BANK is an application like flash card to consolidate your knowleadge you would like to memorize. you are able to store anything you would like to learn and review them at random anytime, anywhere.</p>
             </div>
         );
     }
