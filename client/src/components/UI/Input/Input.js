@@ -27,7 +27,8 @@ const input = props => {
         <textarea
           className={[
             !props.valid ? 'invalid' : 'valid',
-            props.touched ? 'touched' : 'untouched'
+            props.touched ? 'touched' : 'untouched',
+            'customTextarea'
           ].join(' ')}
           id={props.id}
           rows={props.rows}
