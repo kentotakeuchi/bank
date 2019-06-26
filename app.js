@@ -21,7 +21,7 @@ const assetRoutes = require('./routes/asset');
 // db
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-20l9d.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true`;
 console.log(`MONGODB_URI`, MONGODB_URI);
-// `mongodb+srv://${name}:${password_db}@cluster0-20l9d.mongodb.net/phrases?retryWrites=true`
+
 
 console.log(`process.env.NODE_ENV`, process.env.NODE_ENV);
 

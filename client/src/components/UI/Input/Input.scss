@@ -44,5 +44,9 @@
 
 // custom
 .customTextarea:disabled {
-  background: $color-primary !important;
+
+  @include respond(phone) {
+    background-color: $color-primary;
+    color: $color-white;
+  }
 }
