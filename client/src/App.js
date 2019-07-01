@@ -1,7 +1,16 @@
 // third party
-import React, { Component } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {
+  Component
+} from 'react';
+import {
+  Route,
+  Switch,
+  withRouter,
+  Redirect
+} from 'react-router-dom';
+import {
+  connect
+} from 'react-redux';
 
 // scss
 import classes from './App.module.scss';
@@ -49,22 +58,34 @@ class App extends Component {
     const remainingMilliseconds =
       new Date(expiryDate).getTime() - new Date().getTime();
     this.props.onIsAuth();
-    this.setState({ token: token, userId: userId });
+    this.setState({
+      token: token,
+      userId: userId
+    });
     this.setAutoLogout(remainingMilliseconds);
   };
 
   mobileNavHandler = isOpen => {
-    this.setState({ showMobileNav: isOpen, showBackdrop: isOpen });
+    this.setState({
+      showMobileNav: isOpen,
+      showBackdrop: isOpen
+    });
   };
 
   backdropClickHandler = () => {
-    this.setState({ showBackdrop: false, showMobileNav: false, error: null });
+    this.setState({
+      showBackdrop: false,
+      showMobileNav: false,
+      error: null
+    });
   };
 
   logoutHandler = () => {
     if (window.confirm('Are you sure you want to logout?')) {
       this.props.onIsNotAuth();
-      this.setState({ token: null });
+      this.setState({
+        token: null
+      });
       localStorage.removeItem('token');
       localStorage.removeItem('expiryDate');
       localStorage.removeItem('userId');
@@ -76,17 +97,19 @@ class App extends Component {
 
   loginHandler = (event, authData) => {
     event.preventDefault();
-    this.setState({ authLoading: true });
+    this.setState({
+      authLoading: true
+    });
     fetch(`${process.env.REACT_APP_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: authData.email,
-        password: authData.password
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: authData.email,
+          password: authData.password
+        })
       })
-    })
       .then(res => {
         if (res.status === 422) {
           throw new Error('Validation failed.');
@@ -126,18 +149,20 @@ class App extends Component {
 
   signupHandler = (event, authData) => {
     event.preventDefault();
-    this.setState({ authLoading: true });
+    this.setState({
+      authLoading: true
+    });
     fetch(`${process.env.REACT_APP_URL}/api/auth/signup`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: authData.signupForm.email.value,
-        password: authData.signupForm.password.value,
-        name: authData.signupForm.name.value
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: authData.signupForm.email.value,
+          password: authData.signupForm.password.value,
+          name: authData.signupForm.name.value
+        })
       })
-    })
       .then(res => {
         if (res.status === 422) {
           throw new Error(
@@ -153,7 +178,9 @@ class App extends Component {
       .then(resData => {
         console.log(resData);
         this.props.onIsNotAuth();
-        this.setState({ authLoading: false });
+        this.setState({
+          authLoading: false
+        });
         this.props.history.replace('/');
       })
       .catch(err => {
@@ -173,12 +200,16 @@ class App extends Component {
   };
 
   errorHandler = () => {
-    this.setState({ error: null });
+    this.setState({
+      error: null
+    });
   };
 
   resetHandler = (e, authData) => {
     e.preventDefault();
-    this.setState({ authLoading: true });
+    this.setState({
+      authLoading: true
+    });
     fetch(`${process.env.REACT_APP_URL}/api/auth/reset`, {
       method: 'POST',
       headers: {
@@ -199,7 +230,9 @@ class App extends Component {
       return res.json();
     }).then(resData => {
       alert(resData.message);
-      this.setState({ authLoading: false });
+      this.setState({
+        authLoading: false
+      });
       this.props.history.replace('/');
     }).catch(err => {
       alert(err);
@@ -212,7 +245,9 @@ class App extends Component {
 
   newPasswordHandler = (e, authData) => {
     e.preventDefault();
-    this.setState({ authLoading: true });
+    this.setState({
+      authLoading: true
+    });
     fetch(`${process.env.REACT_APP_URL}/api/auth/new-password`, {
       method: 'POST',
       headers: {
@@ -231,7 +266,9 @@ class App extends Component {
       return res.json();
     }).then(resData => {
       alert(resData.message);
-      this.setState({ authLoading: false });
+      this.setState({
+        authLoading: false
+      });
       this.props.history.replace('/');
     }).catch(err => {
       alert(err);
@@ -247,123 +284,161 @@ class App extends Component {
     let routes;
     // no auth
     if (!this.props.isAuth) {
-      routes = (
-        <Switch>
-          <Route
-            path="/about"
-            exact
-            component={AboutPage}
-          />
-          <Route
-            path="/reset"
-            exact
-            render={props => (
-              <ResetPage
-                {...props}
-                onReset={this.resetHandler}
-                loading={this.state.authLoading}
-              />
-            )}
-          />
-          <Route
-            path="/reset/:token"
-            exact
-            render={props => (
-              <NewPasswordPage
-                {...props}
-                onResetPassword={this.newPasswordHandler}
-                loading={this.state.authLoading}
-              />
-            )}
-          />
-          <Route
-            path="/signup"
-            exact
-            render={props => (
-              <SignupPage
-                {...props}
-                onSignup={this.signupHandler}
-                loading={this.state.authLoading}
-              />
-            )}
-          />
-          <Route
-            path="/"
-            exact
-            render={props => (
-              <LoginPage
-                {...props}
-                onLogin={this.loginHandler}
-                loading={this.state.authLoading}
-              />
-            )}
-          />
-          <Redirect to="/" />
-        </Switch>
+      routes = ( <
+        Switch >
+        <
+        Route path = "/about"
+        exact component = {
+          AboutPage
+        }
+        /> <
+        Route path = "/reset"
+        exact render = {
+          props => ( <
+            ResetPage {
+              ...props
+            }
+            onReset = {
+              this.resetHandler
+            }
+            loading = {
+              this.state.authLoading
+            }
+            />
+          )
+        }
+        /> <
+        Route path = "/reset/:token"
+        exact render = {
+          props => ( <
+            NewPasswordPage {
+              ...props
+            }
+            onResetPassword = {
+              this.newPasswordHandler
+            }
+            loading = {
+              this.state.authLoading
+            }
+            />
+          )
+        }
+        /> <
+        Route path = "/signup"
+        exact render = {
+          props => ( <
+            SignupPage {
+              ...props
+            }
+            onSignup = {
+              this.signupHandler
+            }
+            loading = {
+              this.state.authLoading
+            }
+            />
+          )
+        }
+        /> <
+        Route path = "/"
+        exact render = {
+          props => ( <
+            LoginPage {
+              ...props
+            }
+            onLogin = {
+              this.loginHandler
+            }
+            loading = {
+              this.state.authLoading
+            }
+            />
+          )
+        }
+        /> <
+        Redirect to = "/" / >
+        <
+        /Switch>
       );
     }
 
     // auth
     if (this.props.isAuth) {
-      routes = (
-        <Switch>
-          {/* <Route path="/asset" exact component={Asset}/> */}
-          <Route
-            path="/asset"
-            exact
-            render={props => (
-              <Asset
-                {...props}
-                token={this.state.token}
-              />
-            )}
-          />
-          <Route
-            path="/add"
-            exact
-            render={props => (
-              <Add
-                {...props}
-                token={this.state.token}
-              />
-            )}
-          />
-          <Route
-            path="/"
-            exact
-            render={props => (
-              <Home
-                {...props}
-                token={this.state.token}
-              />
-            )}
-          />
-          <Redirect to="/" />
-        </Switch>
+      routes = ( <
+        Switch > {
+          /* <Route path="/asset" exact component={Asset}/> */ } <
+        Route path = "/asset"
+        exact render = {
+          props => ( <
+            Asset {
+              ...props
+            }
+            token = {
+              this.state.token
+            }
+            />
+          )
+        }
+        /> <
+        Route path = "/add"
+        exact render = {
+          props => ( <
+            Add {
+              ...props
+            }
+            token = {
+              this.state.token
+            }
+            />
+          )
+        }
+        /> <
+        Route path = "/"
+        exact render = {
+          props => ( <
+            Home {
+              ...props
+            }
+            token = {
+              this.state.token
+            }
+            />
+          )
+        }
+        /> <
+        Redirect to = "/" / >
+        <
+        /Switch>
       );
     }
 
-    return (
-      <div className={classes.App}>
-        <Layout onLogout={this.logoutHandler}>
-          {routes}
-        </Layout>
-      </div>
+    return ( <
+      div className = {
+        classes.App
+      } >
+      <
+      Layout onLogout = {
+        this.logoutHandler
+      } > {
+        routes
+      } <
+      /Layout> <
+      /div>
     );
   }
 };
 
 const mapStateToProps = state => {
   return {
-      isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      onIsAuth: () => dispatch( actions.isAuthHandler() ),
-      onIsNotAuth: () => dispatch( actions.isNotAuthHandler() )
+    onIsAuth: () => dispatch(actions.isAuthHandler()),
+    onIsNotAuth: () => dispatch(actions.isNotAuthHandler())
   }
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( withRouter( App ) );
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
