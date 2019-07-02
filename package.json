@@ -26,6 +26,7 @@
     "concurrently": "^4.1.0",
     "crypto": "^1.0.1",
     "express": "^4.16.4",
+    "express-sslify": "^1.2.0",
     "express-validator": "^5.3.1",
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
