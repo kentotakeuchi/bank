@@ -6,19 +6,20 @@ const { validationResult } = require('express-validator/check');
 const Asset = require('../models/asset');
 const User = require('../models/user');
 
-
 // POST /asset/all
 exports.getAll = async (req, res, next) => {
   console.log(`[getAll] req.body`, req.body);
 
   const userId = req.body.userId;
   const currentPage = req.query.page || 1;
-  const perPage = 50;
+  const perPage = 10000;
   try {
     // get the number of data related to this user
-    const userTotalItems = await Asset.find({ creator: {$in: userId} }).countDocuments();
+    const userTotalItems = await Asset.find({
+      creator: { $in: userId }
+    }).countDocuments();
     // get "all" data related to this user
-    const userAssets = await Asset.find({ creator: {$in: userId} })
+    const userAssets = await Asset.find({ creator: { $in: userId } })
       .populate('creator')
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * perPage)
@@ -41,44 +42,44 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
-
 // POST /asset/random-one
 exports.getRandomOne = async (req, res, next) => {
-    // required third party for findRandom
-    // const asset = await Asset.findRandom({}, {}, {limit: 1});
+  // required third party for findRandom
+  // const asset = await Asset.findRandom({}, {}, {limit: 1});
 
-    const userId = req.body.userId;
+  const userId = req.body.userId;
 
-    const userAssets = await Asset.find({ creator: {$in: userId} })
-      .populate('creator')
-      .sort({ createdAt: -1 });
+  const userAssets = await Asset.find({ creator: { $in: userId } })
+    .populate('creator')
+    .sort({ createdAt: -1 });
 
-    // Get the count of all data related to this user
-    const totalItems = await Asset.find({ creator: {$in: userId} }).countDocuments();
-    // Get a random entry
-    const random = Math.floor(Math.random() * totalItems);
-    const randomAsset = userAssets[random];
+  // Get the count of all data related to this user
+  const totalItems = await Asset.find({
+    creator: { $in: userId }
+  }).countDocuments();
+  // Get a random entry
+  const random = Math.floor(Math.random() * totalItems);
+  const randomAsset = userAssets[random];
 
-    try {
-      if (!randomAsset) {
-        const error = new Error('Could not find randomAsset.');
-        error.statusCode = 404;
-        throw error;
-      }
-      const creatorId = await User.findById(randomAsset.creator);
-      res.status(200).json({
-        message: 'randomAsset fetched.',
-        randomAsset: randomAsset,
-        creatorId: creatorId
-      });
-    } catch (err) {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
+  try {
+    if (!randomAsset) {
+      const error = new Error('Could not find randomAsset.');
+      error.statusCode = 404;
+      throw error;
     }
-  };
-
+    const creatorId = await User.findById(randomAsset.creator);
+    res.status(200).json({
+      message: 'randomAsset fetched.',
+      randomAsset: randomAsset,
+      creatorId: creatorId
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
 
 // POST /asset/add
 exports.createAsset = async (req, res, next) => {
@@ -116,7 +117,6 @@ exports.createAsset = async (req, res, next) => {
     next(err);
   }
 };
-
 
 // PUT /asset/:assetId
 exports.updateAsset = async (req, res, next) => {
@@ -184,13 +184,16 @@ exports.deleteAsset = async (req, res, next) => {
     //   userAssets.push(uAsset);
     // });
 
-    const userAssets = await Asset.find({ _id: {$in: userAssetIds} }).sort({ createdAt: -1 });
+    const userAssets = await Asset.find({ _id: { $in: userAssetIds } }).sort({
+      createdAt: -1
+    });
 
     await user.save();
     // io.getIO().emit('assets', { action: 'delete', asset: assetId });
     res.status(200).json({
       message: 'Deleted asset.',
-      assets:  userAssets});
+      assets: userAssets
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
