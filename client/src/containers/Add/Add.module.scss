@@ -1,8 +1,14 @@
-.Form {
-    width: 90%;
-    margin: auto;
+@import '../../sass/mixin.scss';
 
-    & > button {
-        width: 10rem;
-    }
+.Form {
+  width: 70%;
+  margin: auto;
+
+  @include respond(phone) {
+    width: 90%;
+  }
+
+  & > button {
+    width: 10rem;
+  }
 }

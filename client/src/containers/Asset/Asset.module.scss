@@ -1,53 +1,63 @@
 @import '../../sass/variables.scss';
 
 .AssetContainer {
+  display: grid;
+  justify-items: center;
+  grid-row-gap: 2rem;
+
+  margin: 3rem;
+
+  & .Language {
     display: grid;
-    justify-items: center;
-    grid-row-gap: 2rem;
+    justify-items: start;
+    width: 80%;
+    padding: 2rem;
 
-    margin: 3rem;
+    border: 1px solid $color-primary;
+    border-radius: 3px;
 
-    & .Language {
-        display: grid;
-        justify-items: start;
-        width: 80%;
-        padding: 2rem;
+    & li {
+    }
+  }
 
-        border: 1px solid $color-primary;
-        border-radius: 3px;
+  // page numbers area
+  & .PageNumbers {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
-        & li {
-        }
+    & li {
+      font-weight: 600;
+      padding: 1rem;
+      border: 1px solid $color-primary;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+
+      &:hover {
+        color: $color-secondary;
+        border: 1px solid $color-primary-light;
+        background-image: linear-gradient(
+          to bottom,
+          $color-primary,
+          $color-primary-dark
+        );
+        cursor: pointer;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
     }
 
-    // page numbers area
-    & .PageNumbers {
-        display: flex;
-        justify-content: center;
-
-        & li {
-            font-weight: 600;
-            padding: 1rem;
-            border: 1px solid $color-primary;
-            border-radius: 3px;
-
-            &:hover {
-                color: $color-secondary;
-                border: 1px solid $color-primary-light;
-                background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
-                cursor: pointer;
-            }
-
-            &:not(:last-child) {
-                margin-right: 1rem;
-            }
-        }
-
-        & .Active {
-            color: $color-secondary;
-            border: 1px solid $color-primary-light;
-            background-image: linear-gradient(to bottom, $color-primary , $color-primary-dark);
-            cursor: pointer;
-        }
+    & .Active {
+      color: $color-secondary;
+      border: 1px solid $color-primary-light;
+      background-image: linear-gradient(
+        to bottom,
+        $color-primary,
+        $color-primary-dark
+      );
+      cursor: pointer;
     }
+  }
 }
