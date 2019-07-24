@@ -75,7 +75,7 @@ exports.login = (req, res, next) => {
           userId: loadedUser._id.toString()
         },
         'somesupersecretsecret',
-        { expiresIn: '1h' }
+        { expiresIn: '3h' }
       );
       res.status(200).json({ token: token, userId: loadedUser._id.toString() });
     })
@@ -143,7 +143,11 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        res.status(200).json({ message: 'Successfully sent an email to reset your password.' });
+        res
+          .status(200)
+          .json({
+            message: 'Successfully sent an email to reset your password.'
+          });
         transporter.sendMail({
           to: req.body.email,
           from: 'test@taxan.com',
@@ -170,7 +174,7 @@ exports.postNewPassword = (req, res, next) => {
 
   User.findOne({
     resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() },
+    resetTokenExpiration: { $gt: Date.now() }
   })
     .then(user => {
       resetUser = user;
