@@ -31,9 +31,10 @@ console.log(`process.env.NODE_ENV`, process.env.NODE_ENV);
 
 const app = express();
 
+// prevent a heroku node app from sleeping
 setInterval(() => {
   https.get('https://bank-of-something.herokuapp.com/');
-}, 600000); // every 29 minutes (1,740,000)
+}, 1740000); // every 29 minutes (1,740,000)
 
 // for production(ssl)
 // const privateKey = fs.readFileSync('server.key');
