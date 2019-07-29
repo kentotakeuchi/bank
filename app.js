@@ -2,8 +2,9 @@
 // built in
 const path = require('path');
 const fs = require('fs');
+// const http = require('http');
 const enforce = require('express-sslify');
-// const https = require('https');
+const https = require('https');
 
 // third party
 const express = require('express');
@@ -29,6 +30,10 @@ console.log(`MONGODB_URI`, MONGODB_URI);
 console.log(`process.env.NODE_ENV`, process.env.NODE_ENV);
 
 const app = express();
+
+setInterval(() => {
+  https.get('https://bank-of-something.herokuapp.com/');
+}, 600000); // every 29 minutes (1,740,000)
 
 // for production(ssl)
 // const privateKey = fs.readFileSync('server.key');
