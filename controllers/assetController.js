@@ -6,6 +6,49 @@ const { validationResult } = require('express-validator/check');
 const Asset = require('../models/asset');
 const User = require('../models/user');
 
+// GET /asset/term
+exports.getTermItems = async (req, res, next) => {
+  const term = req.params.term;
+
+  const userId = req.body.userId;
+  const currentPage = req.query.page || 1;
+  const perPage = 10000;
+  try {
+    // get the number of data related to this user
+    const userTotalItems = await Asset.find({
+      creator: { $in: userId },
+      $or: [
+        { english: { $regex: term, $options: 'i' } },
+        { japanese: { $regex: term, $options: 'i' } }
+      ]
+    }).countDocuments();
+    // get "all" data related to this user
+    const termAssets = await Asset.find({
+      creator: { $in: userId },
+      $or: [
+        { english: { $regex: term, $options: 'i' } },
+        { japanese: { $regex: term, $options: 'i' } }
+      ]
+    })
+      .populate('creator')
+      .sort({ createdAt: -1 })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage);
+    console.log(`termAssets`, termAssets);
+
+    res.status(200).json({
+      message: 'Fetched assets successfully.',
+      assets: termAssets,
+      totalItems: userTotalItems
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 // POST /asset/all
 exports.getAll = async (req, res, next) => {
   console.log(`[getAll] req.body`, req.body);

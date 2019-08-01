@@ -1,0 +1,28 @@
+@import '../../sass/variables.scss';
+@import '../../sass/mixin.scss';
+
+.Search {
+  width: 80%;
+  margin: 0 auto 5rem auto;
+
+  & .Input {
+    display: block;
+    font: inherit;
+    padding: 0.25rem 0.5rem;
+    width: 98%;
+    border-radius: 3px;
+    border: 1px solid $color-secondary;
+    background-color: $color-primary;
+    color: $color-secondary;
+
+    @include respond(phone) {
+      width: 96%;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      color: $color-secondary;
+    }
+  }
+}

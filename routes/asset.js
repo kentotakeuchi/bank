@@ -6,14 +6,14 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-
 // POST /asset/all
 router.post('/all', isAuth, assetController.getAll);
 
+// POST /asset/all:term
+router.post('/all/:term', isAuth, assetController.getTermItems);
 
 // POST /asset/random-one
 router.post('/random-one', isAuth, assetController.getRandomOne);
-
 
 // POST /asset/add
 router.post(
@@ -29,7 +29,6 @@ router.post(
   ],
   assetController.createAsset
 );
-
 
 // PUT /asset/:assetId
 router.put(
